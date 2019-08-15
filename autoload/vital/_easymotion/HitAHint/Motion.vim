@@ -775,7 +775,9 @@ function! s:wincall(func, arglist, ...) abort
   endif
   noautocmd wincmd w
   while winnr() isnot# start_winnr
-    let r[winnr()] = call(a:func, a:arglist, dict)
+    if ! has('nvim') && ! (getwininfo(win_getid())[0].terminal && &modified)
+      let r[winnr()] = call(a:func, a:arglist, dict)
+    endif
     noautocmd wincmd w
   endwhile
   return r
