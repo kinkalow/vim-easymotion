@@ -500,6 +500,7 @@ function! s:SetLines(lines, key) " {{{
 endfunction " }}}
 
 " -- Get characters from user input ------
+let s:cancelcode = has('nvim') ? "\<M-q>" : char2nr("\<M-q>")
 function! s:GetChar(...) abort "{{{
     let mode = get(a:, 1, 0)
     while 1
@@ -509,7 +510,7 @@ function! s:GetChar(...) abort "{{{
         catch /^Vim:Interrupt$/
             let char = 3 " <C-c>
         endtry
-        if char == 27 || char == 3
+        if char == s:cancelcode || char == 27 || char == 3
             " Escape or <C-c> key pressed
             redraw
             call s:Message('Cancelled')
