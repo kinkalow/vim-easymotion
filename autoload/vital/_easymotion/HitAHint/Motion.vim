@@ -122,7 +122,7 @@ endfunction
 
 function! s:overwin.pattern(pattern) abort
   let winpos = self.select_winpos(self.gather_poses_overwin(a:pattern), self.config.keys)
-  if winpos is# -1
+  if winpos is# -1 | return 1  " 2019/09/11: add return 1
   else
     call s:move_to_winpos(winpos)
   endif
